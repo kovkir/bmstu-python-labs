@@ -6,4 +6,4 @@
 
 ## Пример работы:
 
-/Users/kirill/Documents/GitHub/python_labs/sem2/lab_4/1.png
+![](https://github.com/kovkir/bmstu-python-labs/sem2/lab_4/1.png)
