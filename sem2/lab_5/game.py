@@ -54,12 +54,12 @@ class mario_coins():
         win.blit(coin, (self.x, self.y))
         
 def draw():
-    win.blit(background, (0,0))
+    win.blit(background, (0, 0))
     
     if right:
-        win.blit(mario, (x,y))
+        win.blit(mario, (x, y))
     else:
-        win.blit(mario2, (x,y))
+        win.blit(mario2, (x, y))
 
     for i in rocks:
         i.draw_rock(win)
@@ -84,14 +84,14 @@ while run:
         if (i.y < window_height) and (i.y > 0):
             
             if ((y + 15 < i.y + 60 < y + height) and (10 < x + width - i.x < width)) or\
-            ((y + 30 < i.y + 60 < y + height) and (10 < i.x + 60 - x < width)):
-                
+               ((y + 30 < i.y + 60 < y + height) and (10 < i.x + 60 - x < width)):
+
                 pg.time.wait(3000)
-                win.blit(game_over, (0,0))
+                win.blit(game_over, (0, 0))
                 pg.display.update()
                 pg.time.wait(3000)
                 run = False
-                
+
             else:
                 i.y += i.vel
         else:
@@ -121,27 +121,17 @@ while run:
         right = True
 
     if not(isJump):
-
-        #if keys[pg.K_UP] and (y > speed):
-            #y -= speed
-        #if keys[pg.K_DOWN]  and (y < window_height - height - speed):
-            #y += speed
         if keys[pg.K_SPACE]:
-
             isJump = True
-
-            
     else:
         if jump_count >= -10:
 
             if jump_count < 0:
                 y += int((jump_count ** 2) / 5 * 2)
-
             else:
                 y -= int((jump_count ** 2) / 5 * 2) 
 
             jump_count -= 1
-
         else:
             isJump = False
             jump_count = 10
@@ -149,4 +139,3 @@ while run:
     draw()
     
 pg.quit()
-

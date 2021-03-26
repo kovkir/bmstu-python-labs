@@ -3,9 +3,8 @@
 #с максимальным количеством треугольников из В.
 #Дать графическое изображение результатов.
 
-from math import *
-from tkinter import *
-from tkinter import messagebox
+from math import sqrt
+from tkinter import Tk, Canvas, Label, Button, Entry, messagebox
 
 def triangle_check(triangle):
     x1 = triangle[0]
@@ -34,19 +33,19 @@ def clear_canvas():
     canvas.delete("all")
 
 def clear_fields():
-    a=point_txt.get()
-    a1=len(a)
+    a = point_txt.get()
+    len_a = len(a)
     
-    while a1>=1:
-        point_txt.delete(a1-1)
-        a1-=1
+    while len_a >= 1:
+        point_txt.delete(0)
+        len_a -= 1
         
-    b=triangle_txt.get()
-    b1=len(b)
+    b = triangle_txt.get()
+    len_b = len(b)
     
-    while b1>=1:
-        triangle_txt.delete(b1-1)
-        b1-=1
+    while len_b >= 1:
+        triangle_txt.delete(0)
+        len_b -= 1
 
 def build_point():
     a = point_txt.get()
@@ -58,18 +57,19 @@ def build_point():
         except:
             messagebox.showwarning('Ошибка',
             'Неверно введены координаты точки!')
-            return;
+            return
         
-    if len(array)!=2:
+    if len(array) != 2:
         messagebox.showerror('Ошибка',
             'У точки должно быть две координаты!')
-        return;
+        return
 
     if point_coordinates.count(array) == 0:
         point_coordinates.append(array)
         r = 3.5
-        canvas.create_oval(array[0]-r, array[1]-r, array[0]+r, array[1]+r,
-                       width=1, outline='red',fill = 'red')
+        canvas.create_oval(array[0] - r, array[1] - r, 
+                           array[0] + r, array[1]+  r,
+                           width = 1, outline = 'red', fill = 'red')
     
 def build_a_triangle():
     a = triangle_txt.get()
@@ -81,31 +81,33 @@ def build_a_triangle():
         except:
             messagebox.showwarning('Ошибка',
             'Неверно введены координаты треугольника!')
-            return;
+            return
         
-    if len(array)!=6:
+    if len(array) != 6:
         messagebox.showwarning('Ошибка',
             'У треугольника должно быть шесть координат!')
-        return;
+        return
 
     r = 3.5
 
-    for i in range(0,6,2):
-        canvas.create_oval(array[i]-r, array[i+1]-r, array[i]+r, array[i+1]+r,
-                       width=1, outline='green',fill = 'green')
+    for i in range(0, 6, 2):
+        canvas.create_oval(array[i] - r, array[i + 1] - r, 
+                           array[i] + r, array[i + 1] + r,
+                           width=1, outline='green',fill = 'green')
     
     if triangle_check(array) == 1:
         
         if  coordinates_of_triangles.count(array) == 0:
 
-            for i in range(0,6,2):
-                canvas.create_oval(array[i]-r, array[i+1]-r, array[i]+r,
-                        array[i+1]+r, width=1, outline='green',fill = 'green')
+            for i in range(0, 6, 2):
+                canvas.create_oval(array[i] - r, array[i + 1] - r,
+                                   array[i] + r, array[i + 1] + r,
+                                width = 1, outline = 'green', fill = 'green')
                 
             coordinates_of_triangles.append(array[:])
             array.append(array[0])
             array.append(array[1])
-            canvas.create_line(array, width=3, fill = 'green')
+            canvas.create_line(array, width = 3, fill = 'green')
 
     else:
         messagebox.showwarning('Ошибка',
@@ -118,8 +120,8 @@ def click1(event):
     if point_coordinates.count([x,y]) == 0:
         point_coordinates.append([x,y])
         r = 3.5
-        canvas.create_oval(x-r, y-r, x+r, y+r, width=1, outline='red',
-                           fill = 'red')
+        canvas.create_oval(x - r, y - r, x + r, y + r,
+                           width = 1, outline = 'red', fill = 'red')
 
 def click2(event):
     x = event.x
@@ -129,8 +131,8 @@ def click2(event):
     triangle.append(y)
 
     r = 3.5
-    canvas.create_oval(x-r, y-r, x+r, y+r, width=1, outline='green',
-                       fill = 'green')
+    canvas.create_oval(x - r, y - r, x + r, y + r,
+                       width = 1, outline = 'green', fill = 'green')
     
     if len(triangle) == 6 and triangle_check(triangle) == 1:
         
@@ -139,7 +141,7 @@ def click2(event):
             coordinates_of_triangles.append(triangle[:])
             triangle.append(triangle[0])
             triangle.append(triangle[1])
-            canvas.create_line(triangle, width=3, fill = 'green')
+            canvas.create_line(triangle, width = 3, fill = 'green')
             
         triangle.clear()
         
@@ -157,7 +159,7 @@ def build_a_line():
         y1 = point_coordinates[i][1]
 
         for j in range(i + 1,len(point_coordinates)):
-            n = 0;
+            n = 0
             
             x2 = point_coordinates[j][0]
             y2 = point_coordinates[j][1]
@@ -181,12 +183,12 @@ def build_a_line():
                 a4 = x5 - x1
                 b4 = y5 - y1
 
-                p1 = a1*b2 - a2*b1
-                p2 = a1*b3 - a3*b1
-                p3 = a1*b4 - a4*b1
+                p1 = a1 * b2 - a2 * b1
+                p2 = a1 * b3 - a3 * b1
+                p3 = a1 * b4 - a4 * b1
                 
                 if not ((p1 < 0 and p2 < 0 and p3 < 0) or
-                    (p1 > 0 and p2 > 0 and p3 > 0)):
+                        (p1 > 0 and p2 > 0 and p3 > 0)):
                     n += 1
 
             if n > n_max:
@@ -204,15 +206,19 @@ def build_a_line():
             y02 = (x1_max - 800) * (y1_max - y2_max) / (x2_max - x1_max) + y1_max
         
             canvas.create_line(0, y01, 800, y02,
-                           width=3, fill = 'yellow')
+                           width = 3, fill = 'yellow')
         else:
             canvas.create_line(x1_max, 0, x2_max, 600,
-                           width=3, fill = 'yellow')
+                           width = 3, fill = 'yellow')
+
         r = 3.5
-        canvas.create_oval(x1_max - r, y1_max - r, x1_max + r,
-        y1_max + r, width=1, outline='blue', fill = 'blue')
-        canvas.create_oval(x2_max - r, y2_max - r, x2_max + r,
-        y2_max + r, width=1, outline='blue', fill = 'blue')
+
+        canvas.create_oval(x1_max - r, y1_max - r,
+                           x1_max + r, y1_max + r, 
+                           width=1, outline='blue', fill = 'blue')
+        canvas.create_oval(x2_max - r, y2_max - r,
+                           x2_max + r, y2_max + r,
+                           width=1, outline='blue', fill = 'blue')
     else:
         messagebox.showwarning('Ошибка',
                             'Пересечений с треугольниками не найдено :(')
@@ -223,7 +229,7 @@ window.title('Решение планиметрических задач')
 window.geometry("800x600")
 window.resizable(False, False)
 
-canvas = Canvas(window, width=800, height=500, bg = "lightgray")
+canvas = Canvas(window, width = 800, height = 500, bg = "lightgray")
 canvas.place(x = 0, y = 175)
 
 point_coordinates = []
@@ -233,31 +239,37 @@ triangle = []
 canvas.bind('<1>', click1)
 canvas.bind('<2>', click2)
 
-point_lbl = Label(window, text = 'Координаты точки',
-                   font=('Courier New',18)).place(x = 10, y = 10)
-triangle_lbl = Label(window, text = 'Координаты треугольника',
-                     font=('Courier New',18)).place(x = 10, y = 50)
+Label(window, text = 'Координаты точки',
+    font = ('Courier New', 18)).place(x = 10, y = 10)
+Label(window, text = 'Координаты треугольника',
+    font = ('Courier New', 18)).place(x = 10, y = 50)
 
-point_txt = Entry(window, font=('Courier New', 18))
-point_txt.place(width=490, x = 290, y = 10)
-triangle_txt = Entry(window, font=('Courier New', 18))
-triangle_txt.place(width=490, x = 290, y = 50)
+point_txt = Entry(window, font = ('Courier New', 18))
+point_txt.place(width = 490, x = 290, y = 10)
+triangle_txt = Entry(window, font = ('Courier New', 18))
+triangle_txt.place(width = 490, x = 290, y = 50)
 
 point_txt.insert(0,'50 40')
 triangle_txt.insert(0,'60 30 190 200 150 60')
 
-clear_canvas = Button(text = 'Отчистить полотно', font=('Courier New',18),
-                command = clear_canvas).place(width=200,height=40,x=330,y=130)
-clear_fields = Button(text = 'Отчистить поля', font = ('Courier New', 18),
-                command = clear_fields).place(width=200,height=40,x=330,y=88)
+Button(text = 'Отчистить полотно', font = ('Courier New',18),
+    command = clear_canvas).\
+    place(width = 200, height = 40, x = 330, y = 130)
 
-build_point = Button(text = 'Построить\nточку', font = ('Courier New',18),
-                command = build_point).place( width=140,height=60,x=10,y=100)
-build_a_triangle = Button(text = 'Построить\nтреугольник',
-        font = ('Courier New',18), command = build_a_triangle).place(width=140,
-                                                    height=60, x=170, y=100)
-build_a_line = Button(text = 'Построить прямую\nчерез искомые точки',
-        font = ('Courier New',18), command = build_a_line).place(width=230,
-                                                    height=60, x=550, y=100)
+Button(text = 'Отчистить поля', font = ('Courier New', 18),
+    command = clear_fields).\
+    place(width = 200, height = 40, x = 330, y = 88)
+
+Button(text = 'Построить\nточку', font = ('Courier New', 18),
+    command = build_point).\
+    place(width = 140, height = 60,x = 10, y = 100)
+
+Button(text = 'Построить\nтреугольник', font = ('Courier New', 18),
+    command = build_a_triangle).\
+    place(width = 140, height = 60, x = 170, y = 100)
+
+Button(text = 'Построить прямую\nчерез искомые точки',
+    font = ('Courier New',18), command = build_a_line).\
+    place(width = 230, height = 60, x = 550, y = 100)
 
 window.mainloop()
